@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Direct Massage</h1>
+
+      <% @entries.each do |e| %>
+        <strong><a href="/users/<%= e.user.id %>"><%= e.user.email%>さん</a></strong><br>
+      <% end %>
+
+      <hr>
+      <% if @messages.present? %>
+        <% @messages.each do |m| %>
+          <strong><%= m.content %></strong>
+          <small>by <strong><a href="/users/<%= m.user_id %>"><%= m.user.email %>さん</a></strong></small>
+          <hr>
+        <% end %>
+      <% else %>
+        <h3 class="text-center">Nothing message.</h3>
+      <% end %>
+
+      <%= form_for @message do |f| %>
+        <%= f.text_field :content, :placeholder => "Enter message..." , :size => 70 ,class:'form-control'%>
+        <%= f.hidden_field :room_id, :value => @room.id %>
+        <br>
+        <%= f.submit "Send" ,class:'btn btn-primary'%>
+        <%= link_to "Users", users_path ,class:'btn btn-dark'%>
+      <% end %>
+
+    </div>
+  </div>
+</div>

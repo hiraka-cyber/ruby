@@ -1,0 +1,33 @@
+  <% if user_signed_in? %>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <h1>My Profile</h1>
+              <img src="<%= @user.image %>" class="icon_image">
+              <p>Name:<%= @user.name %></p>
+              <p>Profile:<%= @user.profile %></p>
+              <%= render 'follow_form' %>
+              <%= render 'stats' %>
+            <% if @user.id == current_user.id %>
+            <% else %>
+              <% if @isRoom == true %>
+                <p><a class="btn btn-primary" href="/rooms/<%= @roomId %>">Chats</a>
+              <% else %>
+                <%= form_for @room do |f| %>
+                  <%= fields_for @entry do |e| %>
+                    <%= e.hidden_field :user_id, :value=> @user.id %>
+                  <% end %>
+                  <%= f.submit "Chats" ,class:'btn btn-outline-primary'%>
+                <% end %>
+              <% end %>
+            <% end %>
+            <h3>Your good articles</h3>
+            <% @user.liked_articles.each do |article| %>
+            <%= article.user.name %>
+            <%= article.text %><br>
+            <% end %>
+            <%= link_to "Users", users_path,class:'btn btn-outline-dark' %>
+  <% end %>
+            </div>
+          </div>
+        </div>

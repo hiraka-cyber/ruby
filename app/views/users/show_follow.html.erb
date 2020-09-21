@@ -1,0 +1,15 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <% @user.followings.each do |user| %>
+      <table>
+        <tr>
+          <td><%= user.name %></td>
+          <td><%= link_to 'Profile' ,user_path(user) %></td>
+        </tr>
+      </table>
+      <hr>
+      <% end %>
+    </div>
+  </div>
+</div>

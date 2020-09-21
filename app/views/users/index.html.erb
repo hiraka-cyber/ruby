@@ -1,0 +1,13 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <% if user_signed_in? %>
+      <h2>Hello <%= current_user.name %></h2>
+        <% @users.each do |u| %>
+        <p><a href="/users/<%= u.id %>"><%= u.name %>さん</a></p>
+        <hr>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

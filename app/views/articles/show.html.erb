@@ -1,0 +1,60 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <p>
+      <%= link_to @article.video_url.to_s do %>
+      <%= image_tag(@article.video_url(:screenshot).to_s,id:"video",:alt => "screenshot",:class => 'img') %>
+      <% end %>
+      </p>
+
+      <p>
+      <strong>Title:</strong>
+      <%= @article.title %>
+      </p>
+
+      <p>
+        <strong>Text:</strong>
+        <%= @article.text %>
+      </p>
+      <div class="row ml-auto">
+        <div class="col1">
+          <% if current_user.already_liked?(@article) %>
+            <%= button_to 'cancel...', article_like_path(@article), method: :delete ,class:'btn btn-outline-warning'%>
+          <% else %>
+            <%= button_to 'Good!', article_likes_path(@article) ,class:'btn btn-warning'%>
+          <% end %>
+        </div>
+        <div class="col1 ml-2">
+          <h3>: <%= @article.likes.count %></h3>
+        </div>
+      </div>
+      <div class="comment-wrapper border-top　mb-10">
+        <strong class="mt-1">comment</strong>
+        <% @comments.each do |c| %>
+        <div>
+          <% unless c.user.blank? %>
+          <%= c.user.name unless c.user.blank? %><br>
+          <a href="<%= user_path(c.user_id) %>"><%= image_tag c.user.image.to_s,
+            class:"rounded-circle icon_image mr-3 mb-3"%></a>
+            <% end %>
+
+            <%= c.content %>
+          </div>
+          <% end %>
+          <% if user_signed_in? %>
+          <%= form_with(model: [@article, @comment], local: true) do |f| %>
+          <%= f.text_area :content, class: "form-control", rows: 5 %>
+          <%= button_tag type: "submit", class: "btn btn-outline-success float-right mt-1" do %>
+          <i class="far fa-comments"></i> comment
+          <% end %>
+          <% end %>
+          <% end %>
+        </div>
+        <% if current_user.id == @article.user_id%>
+      <%= link_to 'Edit Article',edit_article_path(@article) ,class:'btn btn-outline-success mt-1'%>
+      <%= link_to 'Destroy',article_path(@article),method: :delete,data: {confirm: 'Are you sure?'} ,class:'btn btn-outline-danger mt-1'%>
+      <% end %>
+      <%= link_to 'Back to Article',articles_path ,class:'btn btn-outline-primary mt-1'%>
+    </div>
+  </div>
+</div>

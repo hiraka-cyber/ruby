@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Posts</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css' %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+  </head>
+
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/">Home</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <%= link_to 'My Page',current_user ,class:'btn btn-outline-primary' %>
+      </li>
+      <li class="nav-item">
+        <%= render 'users/search' %>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <% if user_signed_in? %>
+        <%= link_to 'Edit profile', edit_user_registration_path, class: 'btn btn-outline-dark' %>
+        <%= link_to "Logout", destroy_user_session_path, method: :delete, class: 'btn btn-outline-dark'  %>
+      <% end %>
+    </form>
+  </div>
+</nav>
+    </header>
+    <%= yield %>
+  </body>
+</html>
